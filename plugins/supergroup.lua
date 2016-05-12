@@ -1,5 +1,5 @@
-﻿--Begin supergrpup.lua
---Check members #Add supergroup
+Begin supergrpup.lua
+Check members #Add supergroup
 local function check_member_super(cb_extra, success, result)
   local receiver = cb_extra.receiver
   local data = cb_extra.data
@@ -10,7 +10,7 @@ local function check_member_super(cb_extra, success, result)
   for k,v in pairs(result) do
     local member_id = v.peer_id
     if member_id ~= our_id then
-      -- SuperGroup configuration
+       SuperGroup configuration
       data[tostring(msg.to.id)] = {
         group_type = 'SuperGroup',
 		long_id = msg.to.peer_id,
@@ -45,7 +45,7 @@ local function check_member_super(cb_extra, success, result)
   end
 end
 
---Check Members #rem supergroup
+Check Members #rem supergroup
 local function check_member_superrem(cb_extra, success, result)
   local receiver = cb_extra.receiver
   local data = cb_extra.data
@@ -53,7 +53,7 @@ local function check_member_superrem(cb_extra, success, result)
   for k,v in pairs(result) do
     local member_id = v.id
     if member_id ~= our_id then
-	  -- Group configuration removal
+	   Group configuration removal
       data[tostring(msg.to.id)] = nil
       save_data(_config.moderation.data, data)
       local groups = 'groups'
@@ -69,21 +69,21 @@ local function check_member_superrem(cb_extra, success, result)
   end
 end
 
---Function to Add supergroup
+Function to Add supergroup
 local function superadd(msg)
 	local data = load_data(_config.moderation.data)
 	local receiver = get_receiver(msg)
     channel_get_users(receiver, check_member_super,{receiver = receiver, data = data, msg = msg})
 end
 
---Function to remove supergroup
+Function to remove supergroup
 local function superrem(msg)
 	local data = load_data(_config.moderation.data)
     local receiver = get_receiver(msg)
     channel_get_users(receiver, check_member_superrem,{receiver = receiver, data = data, msg = msg})
 end
 
---Get and output admins and bots in supergroup
+Get and output admins and bots in supergroup
 local function callback(cb_extra, success, result)
 local i = 1
 local chat_name = string.gsub(cb_extra.msg.to.print_name, "_", " ")
@@ -112,7 +112,7 @@ local function callback_clean_bots (extra, success, result)
 	end
 end
 
---Get and output info about supergroup
+Get and output info about supergroup
 local function callback_info(cb_extra, success, result)
 local title ="Info for SuperGroup: ["..result.title.."]\n\n"
 local admin_num = "Admin contact: "..result.admins_count.."\n"
@@ -128,7 +128,7 @@ local text = title..admin_num..user_num..kicked_num..channel_id..channel_usernam
     send_large_msg(cb_extra.receiver, text)
 end
 
---Get and output members of supergroup
+Get and output members of supergroup
 local function callback_who(cb_extra, success, result)
 local text = "Members for "..cb_extra.receiver
 local i = 1
@@ -145,7 +145,7 @@ end
 		username = ""
 	end
 	text = text.."\n"..i.." - "..name.." "..username.." [ "..v.peer_id.." ]\n"
-	--text = text.."\n"..username
+	text = text.."\n"..username
 	i = i + 1
 end
     local file = io.open("./groups/lists/supergroups/"..cb_extra.receiver..".txt", "w")
@@ -156,9 +156,9 @@ end
 	post_msg(cb_extra.receiver, text, ok_cb, false)
 end
 
---Get and output list of kicked users for supergroup
+Get and output list of kicked users for supergroup
 local function callback_kicked(cb_extra, success, result)
---vardump(result)
+vardump(result)
 local text = "Kicked Members For SuperGroup "..cb_extra.receiver.."\n\n"
 local i = 1
 for k,v in pairsByKeys(result) do
@@ -179,10 +179,10 @@ end
     file:flush()
     file:close()
     send_document(cb_extra.receiver,"./groups/lists/supergroups/kicked/"..cb_extra.receiver..".txt", ok_cb, false)
-	--send_large_msg(cb_extra.receiver, text)
+	send_large_msg(cb_extra.receiver, text)
 end
 
---Begin supergroup locks
+Begin supergroup locks
 local function lock_group_links(msg, data, target)
   if not is_momod(msg) then
     return
@@ -465,9 +465,9 @@ local function disable_strict_rules(msg, data, target)
     return 'Settings will not be strictly enforced'
   end
 end
---End supergroup locks
+End supergroup locks
 
---'Set supergroup rules' function
+'Set supergroup rules' function
 local function set_rulesmod(msg, data, target)
   if not is_momod(msg) then
     return
@@ -478,7 +478,7 @@ local function set_rulesmod(msg, data, target)
   return 'SuperGroup rules set'
 end
 
---'Get supergroup rules' function
+'Get supergroup rules' function
 local function get_rules(msg, data)
   local data_cat = 'rules'
   if not data[tostring(msg.to.id)][data_cat] then
@@ -490,7 +490,7 @@ local function get_rules(msg, data)
   return rules
 end
 
---Set supergroup to public or not public function
+Set supergroup to public or not public function
 local function set_public_membermod(msg, data, target)
   if not is_momod(msg) then
     return "For Moderators Only"
@@ -530,7 +530,7 @@ local function unset_public_membermod(msg, data, target)
   end
 end
 
---Show supergroup settings; function
+Show supergroup settings; function
 function show_supergroup_settingsmod(msg, target)
  	if not is_momod(msg) then
     	return
@@ -631,7 +631,7 @@ local function modlist(msg)
   if not data[tostring(groups)][tostring(msg.to.id)] then
     return 'SuperGroup Is Not Install'
   end
-  -- determine if table is empty
+   determine if table is empty
   if next(data[tostring(msg.to.id)]['moderators']) == nil then
     return 'No moderator in this group'
   end
@@ -644,7 +644,7 @@ local function modlist(msg)
   return message
 end
 
--- Start by reply actions
+ Start by reply actions
 function get_message_callback(extra, success, result)
 	local get_cmd = extra.get_cmd
 	local msg = extra.msg
@@ -683,7 +683,7 @@ function get_message_callback(extra, success, result)
     if is_admin2(member_id) then
          return send_large_msg("channel#id"..channel_id, "You can't kick other admins")
     end
-		--savelog(msg.to.id, name_log.." ["..msg.from.id.."] kicked: ["..user_id.."] by reply")
+		savelog(msg.to.id, name_log.." ["..msg.from.id.."] kicked: ["..user_id.."] by reply")
 		kick_user(member_id, channel_id)
 	elseif get_cmd == 'channel_block' and result.action and result.action.type == 'chat_add_user' then
 		local user_id = result.action.user.peer_id
@@ -759,7 +759,7 @@ function get_message_callback(extra, success, result)
 		if result.to.peer_type == 'channel' then
 		savelog(msg.to.id, name_log.." ["..msg.from.id.."] promoted mod: @"..member_username.."["..result.from.peer_id.."] by reply")
 		promote2("channel#id"..result.to.peer_id, member_username, member_id)
-	    --channel_set_mod(channel_id, user, ok_cb, false)
+	    channel_set_mod(channel_id, user, ok_cb, false)
 		end
 	elseif get_cmd == "demote" then
 		local full_name = (result.from.first_name or '')..' '..(result.from.last_name or '')
@@ -769,10 +769,10 @@ function get_message_callback(extra, success, result)
 		member_username = '@'.. result.from.username
     end
 		local member_id = result.from.peer_id
-		--local user = "user#id"..result.peer_id
+		local user = "user#id"..result.peer_id
 		savelog(msg.to.id, name_log.." ["..msg.from.id.."] demoted mod: @"..member_username.."["..user_id.."] by reply")
 		demote2("channel#id"..result.to.peer_id, member_username, member_id)
-		--channel_demote(channel_id, user, ok_cb, false)
+		channel_demote(channel_id, user, ok_cb, false)
 	elseif get_cmd == 'mute_user' then
 		if result.service then
 			local action = result.action.type
@@ -802,15 +802,15 @@ function get_message_callback(extra, success, result)
 		end
 	end
 end
--- End by reply actions
+ End by reply actions
 
---By ID actions
+By ID actions
 local function cb_user_info(extra, success, result)
 	local receiver = extra.receiver
 	local user_id = result.peer_id
 	local get_cmd = extra.get_cmd
 	local data = load_data(_config.moderation.data)
-	--[[if get_cmd == "setadmin" then
+	if get_cmd == "setadmin" then
 		local user_id = "user#id"..result.peer_id
 		channel_set_admin(receiver, user_id, ok_cb, false)
 		if result.username then
@@ -818,7 +818,7 @@ local function cb_user_info(extra, success, result)
 		else
 			text = "[ "..result.peer_id.." ] has been set as an admin"
 		end
-			send_large_msg(receiver, text)]]
+			send_large_msg(receiver, text)
 	if get_cmd == "demoteadmin" then
 		if is_admin2(result.peer_id) then
 			return send_large_msg(receiver, "You can't demote global admins")
@@ -849,7 +849,7 @@ local function cb_user_info(extra, success, result)
 	end
 end
 
--- Begin resolve username actions
+ Begin resolve username actions
 local function callbackres(extra, success, result)
   local member_id = result.peer_id
   local member_username = "@"..result.username
@@ -869,7 +869,7 @@ local function callbackres(extra, success, result)
     local receiver = extra.channel
     local user_id = "user#id"..result.peer_id
     channel_invite(receiver, user_id, ok_cb, false)
-	--[[elseif get_cmd == "channel_block" then
+	elseif get_cmd == "channel_block" then
 		local user_id = result.peer_id
 		local channel_id = extra.channelid
     local sender = extra.sender
@@ -919,9 +919,9 @@ local function callbackres(extra, success, result)
 	elseif get_cmd == "promote" then
 		local receiver = extra.channel
 		local user_id = result.peer_id
-		--local user = "user#id"..result.peer_id
+		local user = "user#id"..result.peer_id
 		promote2(receiver, member_username, user_id)
-		--channel_set_mod(receiver, user, ok_cb, false)
+		channel_set_mod(receiver, user, ok_cb, false)
 	elseif get_cmd == "demote" then
 		local receiver = extra.channel
 		local user_id = result.peer_id
@@ -957,9 +957,9 @@ local function callbackres(extra, success, result)
 		end
 	end
 end
---End resolve username actions
+End resolve username actions
 
---Begin non-channel_invite username actions
+Begin non-channel_invite username actions
 local function in_channel_cb(cb_extra, success, result)
   local get_cmd = cb_extra.get_cmd
   local receiver = cb_extra.receiver
@@ -1073,9 +1073,9 @@ elseif get_cmd == "setadmin" then
  end
 send_large_msg(receiver, text)
 end
---End non-channel_invite username actions
+End non-channel_invite username actions
 
---'Set supergroup photo' function
+'Set supergroup photo' function
 local function set_supergroup_photo(msg, success, result)
   local data = load_data(_config.moderation.data)
   if not data[tostring(msg.to.id)] then
@@ -1097,7 +1097,7 @@ local function set_supergroup_photo(msg, success, result)
   end
 end
 
---Run function
+Run function
 local function run(msg, matches)
 	if msg.to.type == 'chat' then
 		if matches[1] == 'tosuper' then
@@ -1344,11 +1344,11 @@ local function run(msg, matches)
 			resolve_username(username,  callbackres, cbres_extra)
 		end
 
-		--[[if matches[1] == 'kick' and is_momod(msg) then
+		if matches[1] == 'kick' and is_momod(msg) then
 			local receiver = channel..matches[3]
 			local user = "user#id"..matches[2]
 			chaannel_kick(receiver, user, ok_cb, false)
-		end]]
+		end
 
 			if matches[1] == 'setadmin' then
 				if not is_support(msg.from.id) and not is_owner(msg) then
@@ -1361,16 +1361,16 @@ local function run(msg, matches)
 				}
 				setadmin = get_message(msg.reply_id, get_message_callback, cbreply_extra)
 			elseif matches[1] == 'setadmin' and matches[2] and string.match(matches[2], '^%d+$') then
-			--[[]	local receiver = get_receiver(msg)
+				local receiver = get_receiver(msg)
 				local user_id = "user#id"..matches[2]
 				local get_cmd = 'setadmin'
-				user_info(user_id, cb_user_info, {receiver = receiver, get_cmd = get_cmd})]]
+				user_info(user_id, cb_user_info, {receiver = receiver, get_cmd = get_cmd}
 				local get_cmd = 'setadmin'
 				local msg = msg
 				local user_id = matches[2]
 				channel_get_users (receiver, in_channel_cb, {get_cmd=get_cmd, receiver=receiver, msg=msg, user_id=user_id})
 			elseif matches[1] == 'setadmin' and matches[2] and not string.match(matches[2], '^%d+$') then
-				--[[local cbres_extra = {
+				local cbres_extra = {
 					channel = get_receiver(msg),
 					get_cmd = 'setadmin'
 				}
@@ -1421,7 +1421,7 @@ local function run(msg, matches)
 				}
 				setowner = get_message(msg.reply_id, get_message_callback, cbreply_extra)
 			elseif matches[1] == 'setowner' and matches[2] and string.match(matches[2], '^%d+$') then
-		--[[	local group_owner = data[tostring(msg.to.id)]['set_owner']
+		local group_owner = data[tostring(msg.to.id)]['set_owner']
 				if group_owner then
 					local receiver = get_receiver(msg)
 					local user_id = "user#id"..group_owner
@@ -1435,7 +1435,7 @@ local function run(msg, matches)
 					savelog(msg.to.id, name_log.." ["..msg.from.id.."] set ["..matches[2].."] as owner")
 					local text = "[ "..matches[2].." ] added as owner"
 					return text
-				end]]
+				end
 				local	get_cmd = 'setowner'
 				local	msg = msg
 				local user_id = matches[2]
@@ -2041,8 +2041,8 @@ return {
 	"^[#!/]([Bb]ots)$",
 	"^[#!/]([Ww]ho)$",
 	"^[#!/]([Kk]icked)$",
-      --"^[#!/]([Bb]lock) (.*)",
-      --"^[#!/]([Bb]lock)",
+      "^[#!/]([Bb]lock) (.*)",
+      "^[#!/]([Bb]lock)",
 	"^[#!/]([Tt]osuper)$",
 	"^[#!/]([Ii][Dd])$",
 	"^[#!/]([Ii][Dd]) (.*)$",
@@ -2096,5 +2096,5 @@ return {
   run = run,
   pre_process = pre_process
 }
---End supergrpup.lua
+end supergrpup.lua
 
