@@ -261,8 +261,8 @@ end
 	if matches[1] == 'reload' then
 		receiver = get_receiver(msg)
 		reload_plugins(true)
-		post_msg(receiver, " TeleIran Is Reload ", ok_cb, false)
-		return " TeleIran Is Reload "
+		post_msg(receiver, " Smart Is Reload ", ok_cb, false)
+		return " Smart Is Reload "
 	end
 	--[[*For Debug*
 	if matches[1] == "vardumpmsg" and is_admin1(msg) then
