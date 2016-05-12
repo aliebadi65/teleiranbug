@@ -216,6 +216,7 @@ function create_config( )
     "admin",
     "all",
     "badword",
+    "updater",
     "banhammer",
     "broadcast",
     "calc",
@@ -478,12 +479,12 @@ This command will send text to [group_id]
 #res @username
 
 
-🔘Returns TeleIran About
-#TeleIran 
+🔘ReturnsSmartgp About
+#Smartgp 
 
 〰〰〰〰〰〰〰〰〰〰〰〰
 
-✅Channel: @TeleIranTeam☢
+✅Channel: @Smartgp☢
 
 ]],
 	help_text_super =[[
@@ -632,12 +633,12 @@ This command will send text to [group_id]
 #res @username
 
 
-🔘Returns TeleIran About
-#TeleIran 
+🔘ReturnsSmargp About
+#Smargp 
 
 〰〰〰〰〰〰〰〰〰〰〰〰
 
-✅Channel: @TeleIranTeam☢
+✅Channel: @Smartgp
 ]],
   }
   serialize_to_file(config, './data/config.lua')
