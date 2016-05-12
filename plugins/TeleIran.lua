@@ -1,13 +1,13 @@
 do
 function run(msg, matches)
-  return " TeleIran V5 Based On Lua \n\n Developer: @TelePublic \n Channel: @TeleIranTeam \n\n WebSite: Www.TeleIran.Vcp.Ir \n\n Pay: http://DargahPardakht.com/TeleIran "
+  return " Smartgp V2 Based On Lua \n\n Developer: @Aliebadi5 \n Channel: @Smartgp \n\n Pay: http://upal.ir/buy/iwzqqdp2h8 "
   end
 return {
-  description = " TeleIran ", 
-  usage = " TeleIran ",
+  description = " Smartgp ", 
+  usage = " Smartgp ",
   patterns = {
-    "^[#/!@][Tt][Ee][Ll][Ee][Ii][Rr][Aa][Nn]$",
-    "^[#/!][Vv][Ee][Rr][Ss][Ii][Oo][Nn]$",
+    "^[#/!@][Ss][Mm][Aa][Rr][Tt][Gp]$",
+    "^[#/!][Vv][Ee][Rr]$",
   },
   run = run
 }
